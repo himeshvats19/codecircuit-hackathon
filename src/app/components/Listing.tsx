@@ -150,7 +150,7 @@ export default function ExpandableCard({ currentTrackCallback, activeTrack }: Ex
             </AnimatePresence>
             < ul className="mx-auto w-full gap-4">
                 {
-                    cards.map((card, index) => (
+                    cards.map((card) => (
                         <motion.div
                             layoutId={`card-${card.title}-${id}`}
                             key={`card-${card.title}-${id}`}
