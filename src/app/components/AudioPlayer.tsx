@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import AudioControls from "./AudioControls";
 import Backdrop from "./Backdrop";
@@ -14,6 +13,8 @@ interface Track {
 
 interface AudioPlayerProps {
     tracks: Track[];
+    currentTrack: number;
+    whatsPlayingCallback?: (trackIndex: number) => void;
 }
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks, currentTrack, whatsPlayingCallback }) => {

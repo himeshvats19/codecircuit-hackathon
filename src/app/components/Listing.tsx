@@ -4,23 +4,30 @@ import React, { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useOutsideClick } from "../hooks/use-outside-click";
 
-export default function ExpandableCardDemo({ currentTrackCallback, activeTrack }) {
+interface ExpandableCardProps {
+    activeTrack: number;
+    currentTrackCallback?: (id: number) => void;
+}
+
+export default function ExpandableCard({ currentTrackCallback, activeTrack }: ExpandableCardProps) {
     const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
         null
     );
     const [activeTrackPlaying, setActiveTrackPlaying] = useState<(typeof cards)[number] | boolean | null>(
         null
     );
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLDivElement>(null!);
     const id = useId();
 
     useEffect(() => {
         setActiveTrackPlaying(cards[activeTrack - 1])
     }, [activeTrack]);
     const setActiveTrack = (id: number) => {
-        currentTrackCallback(id);
-        setActiveTrackPlaying(cards[id - 1])
-        setActive(null)
+        if (currentTrackCallback) {
+            currentTrackCallback(id);
+            setActiveTrackPlaying(cards[id - 1])
+            setActive(null)
+        }
     }
 
     useEffect(() => {
@@ -148,7 +155,7 @@ export default function ExpandableCardDemo({ currentTrackCallback, activeTrack }
                             layoutId={`card-${card.title}-${id}`}
                             key={`card-${card.title}-${id}`}
                             onClick={() => setActive(card)}
-                            style={{ border: activeTrackPlaying && activeTrackPlaying?.id === card.id ? '5px solid grey' : 'none' }}
+                            style={{ border: activeTrackPlaying && typeof activeTrackPlaying === 'object' && activeTrackPlaying.id === card.id ? '5px solid grey' : 'none' }}
                             className="p-4 flex flex-col md:flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
                         >
                             <div className="flex gap-4 flex-col md:flex-row " >

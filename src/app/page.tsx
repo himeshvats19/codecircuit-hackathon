@@ -1,11 +1,8 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import ExpandableCardDemo from './components/Listing';
+import ExpandableCard from './components/Listing';
 import AudioPlayer from './components/AudioPlayer';
 import WaveSurfer from 'wavesurfer.js'
-
-
-
 
 const tracks: any = [
   {
@@ -57,7 +54,7 @@ export default function Home() {
 
   useEffect(() => {
     const wavesurfer = WaveSurfer.create({
-      container: document.getElementById('waveform'),
+      container: document.getElementById('waveform') as HTMLElement,
       waveColor: 'grey',
       progressColor: 'rgb(100, 0, 100)',
       interact: false,
@@ -76,7 +73,7 @@ export default function Home() {
     <div style={{ display: 'flex', justifyContent: 'space-around', padding: 100, zIndex: 10, height: '85vh' }}>
       <div className="w-3/5" style={{ zIndex: 1 }}>
         <h1>Top 5 Podcasts of the Week!</h1>
-        <ExpandableCardDemo currentTrackCallback={(id: number) => setCurrentTrackCallBack(id)} activeTrack={activeTrack} />
+        <ExpandableCard currentTrackCallback={(id: number) => setCurrentTrackCallBack(id)} activeTrack={activeTrack} />
       </div>
       <div className="w-2/5" >
         <AudioPlayer tracks={tracks} currentTrack={currentTrack} whatsPlayingCallback={(trackIndex) => setActiveTrack(trackIndex)} />
